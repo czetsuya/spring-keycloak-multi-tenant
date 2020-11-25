@@ -12,7 +12,13 @@ It uses a single Keycloak instance with multiple realms.
 
 - You must have prior knowledge with Spring and Keycloak.
 - You must have a project created in your Google console for testing.
-- Don't forget to configure the Identity Provider inside Keycloak after importing the realms inside the the keycloak-realms directory.
+
+## Instructions
+
+1. Create 2 projects in Google Console. Create credentials and Oauth screens for both.
+2. Import the realms inside the the keycloak-realms directory.
+3. Configure the Identity Provider inside Keycloak (Google).
+4. Set the idpHint (default identity provider for a realm) in Authentication / Identity Provider Redirector, click Actions / Config and set Alias=idpHint, Default Identity Provider=Google.
 
 ## References
 
