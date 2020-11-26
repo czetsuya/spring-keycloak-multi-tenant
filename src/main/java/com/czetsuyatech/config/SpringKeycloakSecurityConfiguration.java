@@ -72,7 +72,7 @@ public class SpringKeycloakSecurityConfiguration {
          * @return
          */
         @Bean
-        public KeycloakConfigResolver KeycloakConfigResolver() {
+        public KeycloakConfigResolver keycloakConfigResolver() {
             return new PathBasedConfigResolver();
         }
 
