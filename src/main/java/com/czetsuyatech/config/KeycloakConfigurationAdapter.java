@@ -135,7 +135,7 @@ public class KeycloakConfigurationAdapter extends KeycloakWebSecurityConfigurerA
                 .and().cors()
                 // delegate logout endpoint to spring security
 
-                .and().logout().addLogoutHandler(keycloakLogoutHandler()).logoutUrl("/logout").logoutSuccessHandler(
+                .and().logout().addLogoutHandler(keycloakLogoutHandler()).logoutUrl("/tenant/*/logout").logoutSuccessHandler(
                         // logout handler for API
                         (HttpServletRequest request, HttpServletResponse response, Authentication authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                 .and().apply(new SpringKeycloakSecurityAdapter());
