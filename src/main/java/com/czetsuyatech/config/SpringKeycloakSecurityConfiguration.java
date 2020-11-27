@@ -5,7 +5,6 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -13,10 +12,13 @@ import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsF
 import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter;
+import org.keycloak.adapters.springsecurity.management.HttpSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +42,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 public class SpringKeycloakSecurityConfiguration {
 
+    @DependsOn("keycloakConfigResolver")
     @KeycloakConfiguration
     @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true", matchIfMissing = true)
     public static class KeycloakConfigurationAdapter extends KeycloakWebSecurityConfigurerAdapter {
@@ -66,16 +69,6 @@ public class SpringKeycloakSecurityConfiguration {
             return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
         }
 
-        /**
-         * Required to handle spring boot configurations
-         * 
-         * @return
-         */
-        @Bean
-        public KeycloakConfigResolver keycloakConfigResolver() {
-            return new PathBasedConfigResolver();
-        }
-
         @Override
         protected AuthenticationEntryPoint authenticationEntryPoint() throws Exception {
             return new MultitenantKeycloakAuthenticationEntryPoint(adapterDeploymentContext());
@@ -86,6 +79,14 @@ public class SpringKeycloakSecurityConfiguration {
             KeycloakAuthenticationProcessingFilter filter = new KeycloakAuthenticationProcessingFilter(authenticationManager(), new AntPathRequestMatcher("/tenant/*/sso/login"));
             filter.setSessionAuthenticationStrategy(sessionAuthenticationStrategy());
             return filter;
+        }
+
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @Bean
+        public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(KeycloakAuthenticationProcessingFilter filter) {
+            FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
+            registrationBean.setEnabled(false);
+            return registrationBean;
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -110,6 +111,13 @@ public class SpringKeycloakSecurityConfiguration {
             FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
             registrationBean.setEnabled(false);
             return registrationBean;
+        }
+
+        @Bean
+        @Override
+        @ConditionalOnMissingBean(HttpSessionManager.class)
+        protected HttpSessionManager httpSessionManager() {
+            return new HttpSessionManager();
         }
 
         /**
