@@ -1,6 +1,6 @@
 {
 	"realm": "branch1",
-	"auth-server-url": "http://localhost:8083/auth/",
+	"auth-server-url": "http://localhost:8081/auth/",
 	"ssl-required": "external",
 	"resource": "web",
 	"public-client": true,

@@ -17,13 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CatalogController {
 
-    @GetMapping("/tenant/branch2/catalog")
-    public String listCatalogBranch2() {
-        return "Catalog2";
-    }
-
     @GetMapping("/tenant/branch1/catalog")
     public String listCatalogBranch1() {
+        return getUserInfo();
+    }
+
+    @GetMapping("/tenant/branch2/catalog")
+    public String listCatalogBranch2() {
+        return getUserInfo();
+    }
+
+    @SuppressWarnings("unchecked")
+    private String getUserInfo() {
+
         KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
         final Principal principal = (Principal) authentication.getPrincipal();
@@ -44,6 +50,7 @@ public class CatalogController {
             System.out.println(accessToken.getGivenName());
             System.out.println(accessToken.getFamilyName());
         }
+
         return "userInfo " + tokenInfo;
     }
 }

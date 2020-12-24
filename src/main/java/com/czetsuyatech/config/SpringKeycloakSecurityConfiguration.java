@@ -178,7 +178,8 @@ public class SpringKeycloakSecurityConfiguration {
                     .and().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
 
                     .antMatchers("/logout", "/", "/unsecured").permitAll() //
-                    .antMatchers("/**/catalog").hasRole("CATALOG_MANAGER") //
+                    .antMatchers("/**/catalog").authenticated() //
+                    // .antMatchers("/**/catalog").hasRole("CATALOG_MANAGER") //
 
                     .anyRequest().denyAll();
 
