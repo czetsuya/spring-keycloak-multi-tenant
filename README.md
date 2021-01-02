@@ -22,5 +22,6 @@ It uses a single Keycloak instance with multiple realms.
 
 ## References
 
+- https://www.czetsuyatech.com/2020/11/how-to-implement-multitenancy-with-spring-boot-and-keycloak.html
 - https://www.keycloak.org/docs/latest/securing_apps/index.html
 - https://www.keycloak.org/docs/latest/securing_apps/index.html#_multi_tenancy
