@@ -1,7 +1,3 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
-**Help me build more open-source projects by becoming my sponsor.*
-
 # Spring Keycloak Multi Tenant Project
 
 This project demonstrates multi-tenancy in Keycloak by overriding the class KeycloakConfigResolver to load the keycloak json configuration file depending on the realm specified in the path in each request. The realm is information is cache, so it's only loaded once per login.
