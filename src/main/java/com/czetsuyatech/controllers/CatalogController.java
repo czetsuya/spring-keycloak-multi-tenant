@@ -1,4 +1,4 @@
-package com.czetsuyatech.controller;
+package com.czetsuyatech.controllers;
 
 import java.security.Principal;
 

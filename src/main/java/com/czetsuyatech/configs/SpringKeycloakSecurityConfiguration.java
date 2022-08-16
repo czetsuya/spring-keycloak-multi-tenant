@@ -1,4 +1,4 @@
-package com.czetsuyatech.config;
+package com.czetsuyatech.configs;
 
 import java.util.Arrays;
 

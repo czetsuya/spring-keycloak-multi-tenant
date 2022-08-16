@@ -1,4 +1,4 @@
-package com.czetsuyatech.config;
+package com.czetsuyatech.configs;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class MultitenantKeycloakAuthenticationEntryPoint extends KeycloakAuthent
         String path = request.getRequestURI();
         int multitenantIndex = path.indexOf("tenant/");
         if (multitenantIndex == -1) {
-            throw new IllegalStateException("Not able to resolve realm from the request path!");
+            throw new IllegalStateException("Not able to resolve the realm from the request path!");
         }
 
         String realm = path.substring(path.indexOf("tenant/")).split("/")[1];
