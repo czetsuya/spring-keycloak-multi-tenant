@@ -8,7 +8,9 @@ import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.OIDCHttpFacade;
 import org.keycloak.representations.adapters.config.AdapterConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
+@ConditionalOnProperty(prefix = "keycloak.config", name = "resolver", havingValue = "header")
 public class HeaderBasedConfigResolver implements KeycloakConfigResolver {
 
   private final Map<String, KeycloakDeployment> cache = new ConcurrentHashMap<>();
