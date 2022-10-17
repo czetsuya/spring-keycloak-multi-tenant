@@ -1,6 +1,6 @@
 # Spring Keycloak Multi Tenant Project
 
-This project demonstrates multi-tenancy in Keycloak by overriding the class KeycloakConfigResolver to load the keycloak json configuration file depending on the realm specified in the path in each request. The realm is information is cache, so it's only loaded once per login.
+This project demonstrates multi-tenancy in Keycloak by overriding the class KeycloakConfigResolver to load the keycloak json configuration file depending on the realm specified in the path in each request. The realm information is cache, so it's only loaded once per login.
 
 It uses a single Keycloak instance with multiple realms.
 
